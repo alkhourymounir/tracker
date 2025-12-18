@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sessions Tracker</title>
-     <link rel="manifest" href="./manifest.json">
-    <meta name="theme-color" content="#722ED1">
-    <link rel="manifest" href="./manifest.webmanifest">
-    <meta name="theme-color" content="#722ED1">
     <style>
         :root {
             --color-primary: #722ED1;
@@ -45,6 +41,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
+        /* Icon styling */
         .barbell-icon {
             display: inline-block;
             width: 80px;
@@ -56,9 +53,7 @@
         .barbell-icon svg {
             width: 100%;
             height: 100%;
-            stroke: var(--color-text);
-            stroke-width: 1.5;
-            fill: var(--color-text);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         .header h1 { 
@@ -460,17 +455,30 @@
             <h1>
                 <div class="barbell-icon">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="4" cy="8" r="3.5"/>
-                        <circle cx="4" cy="8" r="2.5" fill="none"/>
-                        <rect x="6.5" y="6.5" width="3" height="3" rx="1"/>
-                        <rect x="9.5" y="7.5" width="4" height="1" rx="0.5"/>
-                        <path d="M16 12c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2h-4zm2 1c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z" fill-rule="evenodd"/>
-                        <rect x="16" y="10" width="4" height="2" rx="1" fill="none"/>
+                        <!-- Colorful Clipboard with Checkmark -->
+                        <!-- Background gradient -->
+                        <defs>
+                            <linearGradient id="clipboardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#722ED1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#1890FF;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Clipboard body -->
+                        <rect x="4" y="2" width="14" height="18" rx="2" fill="url(#clipboardGradient)" stroke="none"/>
+                        <!-- Clipboard clip -->
+                        <rect x="9" y="0" width="4" height="3" rx="0.5" fill="#722ED1"/>
+                        <!-- White paper area -->
+                        <rect x="6" y="4" width="10" height="14" rx="1" fill="white"/>
+                        <!-- Checkmark -->
+                        <path d="M10 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Decorative lines -->
+                        <line x1="8" y1="8" x2="14" y2="8" stroke="#E8E8E8" stroke-width="1"/>
+                        <line x1="8" y1="11" x2="14" y2="11" stroke="#E8E8E8" stroke-width="1"/>
                     </svg>
                 </div>
-                Training Sessions Tracker
+                Sessions Tracker
             </h1>
-            <p>Track your personal training sessions and payment status</p>
+            <p>Track your sessions and payment status</p>
         </div>
 
         <div class="tabs">
@@ -492,14 +500,16 @@
             </button>
         </div>
 
+        <!-- Dashboard -->
         <div id="dashboard" class="tab-content active">
             <div class="stats-grid" id="statsContainer"></div>
             <h2 class="section-title">Recent Sessions</h2>
             <div id="recentSessions"></div>
         </div>
 
+        <!-- Add Session -->
         <div id="add-session" class="tab-content">
-            <h2 class="section-title">Add New Training Session</h2>
+            <h2 class="section-title">Add New Session</h2>
             <div class="form-row">
                 <div class="form-group">
                     <label for="sessionDate">Session Date *</label>
@@ -530,8 +540,9 @@
             </div>
         </div>
 
+        <!-- Calendar -->
         <div id="calendar" class="tab-content">
-            <h2 class="section-title">Training Calendar & Monthly Budget</h2>
+            <h2 class="section-title">Calendar & Monthly Budget</h2>
             <div class="monthly-budget">
                 <label for="monthlyBudget">Sessions per Month Budget:</label>
                 <input type="number" id="monthlyBudget" class="budget-input" min="0" placeholder="e.g., 10" onchange="updateMonthlyStats()">
@@ -559,12 +570,14 @@
             </div>
         </div>
 
+        <!-- All Sessions -->
         <div id="all-sessions" class="tab-content">
-            <h2 class="section-title">All Training Sessions</h2>
+            <h2 class="section-title">All Sessions</h2>
             <div id="allSessionsList"></div>
         </div>
     </div>
 
+    <!-- Modal for adding session from calendar -->
     <div id="addSessionModal" class="modal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">&times;</button>
@@ -850,15 +863,12 @@
         updateDashboard();
         renderCalendar();
 
+        // Close modal when clicking outside
         document.getElementById('addSessionModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeModal();
             }
         });
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js').catch(() => {});
-        }
     </script>
 </body>
 </html>
