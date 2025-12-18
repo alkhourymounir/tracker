@@ -454,41 +454,115 @@
             }
         }
 
-        /* Mobile layout fixes */
+        /* Mobile layout fixes - aggressive compression */
         @media (max-width: 480px) {
             body {
-                font-size: 14px;
+                font-size: 13px;
+                padding: 12px;
             }
 
             .container {
-                padding: 0 8px;
+                padding: 0;
             }
 
-            h1, h2, h3 {
-                margin-bottom: 6px;
+            .header {
+                padding: 30px 15px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 4px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
+            .barbell-icon {
+                width: 60px;
+                height: 60px;
+                margin-right: 10px;
             }
 
             .tabs {
-                margin-bottom: 8px;
+                gap: 8px;
+                margin-bottom: 12px;
             }
 
             .tab-btn {
-                padding: 6px 10px;
-                font-size: 13px;
+                padding: 8px 12px;
+                font-size: 12px;
+                gap: 4px;
+            }
+
+            .tab-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .stat-card {
+                padding: 12px;
+                border-radius: 10px;
+            }
+
+            .stat-number {
+                font-size: 28px;
+                margin-bottom: 4px;
+            }
+
+            .stat-label {
+                font-size: 10px;
             }
 
             .section-title {
-                margin: 6px 0 4px;
+                font-size: 16px;
+                margin: 12px 0 8px;
             }
 
             .monthly-budget {
-                padding: 16px 12px;
-                margin-bottom: 12px;
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+
+            .monthly-budget label {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .budget-input {
+                padding: 10px;
+                font-size: 13px;
+                max-width: 100%;
+            }
+
+            #monthlyStatsContainer {
+                gap: 8px !important;
+                margin-top: 10px !important;
             }
 
             .calendar-wrapper {
-                padding: 16px 12px;
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+
+            .calendar-nav {
                 margin-bottom: 12px;
+            }
+
+            .calendar-nav h2 {
+                font-size: 16px;
+            }
+
+            .calendar-nav button {
+                padding: 6px 10px;
+                font-size: 11px;
             }
 
             .calendar-grid {
@@ -496,8 +570,64 @@
             }
 
             .calendar-day {
-                padding: 8px 2px;
+                padding: 6px 2px;
+                font-size: 10px;
+            }
+
+            .calendar-count {
+                font-size: 8px;
+            }
+
+            .session-card {
+                padding: 12px;
+                margin-bottom: 8px;
+            }
+
+            .session-info {
+                min-width: auto;
+            }
+
+            .session-number {
+                font-size: 14px;
+                margin-bottom: 4px;
+            }
+
+            .session-date {
                 font-size: 11px;
+            }
+
+            .form-row {
+                gap: 12px;
+            }
+
+            input, select {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            label {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            button {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+
+            .btn-paid, .btn-unpaid, .btn-delete {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+
+            .modal-header {
+                font-size: 16px;
+                margin-bottom: 12px;
             }
         }
     </style>
@@ -590,9 +720,17 @@
         <div id="calendar" class="tab-content">
             <h2 class="section-title">Sessions Calendar & Monthly Budget</h2>
             <div class="monthly-budget">
-                <label for="monthlyBudget">Sessions per Month Budget:</label>
-                <input type="number" id="monthlyBudget" class="budget-input" min="0" placeholder="Enter budget" onchange="updateMonthlyStats()">
-                <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;" id="monthlyStatsContainer"></div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div>
+                        <label for="monthlyBudget">Budget:</label>
+                        <input type="number" id="monthlyBudget" class="budget-input" min="0" placeholder="Enter budget" onchange="updateMonthlyStats()">
+                    </div>
+                    <div>
+                        <label>Total Sessions:</label>
+                        <div style="padding: 12px; background: var(--color-input); border: 2px solid var(--color-border); border-radius: 8px; font-size: 18px; font-weight: 700; color: var(--color-primary); text-align: center;" id="totalSessionsCounter">0</div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;" id="monthlyStatsContainer"></div>
             </div>
 
             <div class="calendar-wrapper">
@@ -835,6 +973,8 @@
         }
 
         function updateMonthlyStats() {
+            document.getElementById('totalSessionsCounter').textContent = sessions.length;
+
             const raw = parseInt(document.getElementById('monthlyBudget').value, 10);
             monthlyBudget = isNaN(raw) ? 0 : raw;
             localStorage.setItem('monthlyBudget', monthlyBudget);
