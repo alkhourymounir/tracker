@@ -733,11 +733,11 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                     <div>
                         <label for="monthlyBudget">Budget:</label>
-                        <input type="number" id="monthlyBudget" class="budget-input" min="0" placeholder="Enter budget" onchange="updateMonthlyStats()">
+                        <input type="number" id="monthlyBudget" class="budget-input" min="0" placeholder="Enter budget" onchange="updateMonthlyStats()" style="min-height: 48px;">
                     </div>
                     <div>
                         <label>Total Sessions:</label>
-                        <div style="padding: 12px; background: var(--color-input); border: 2px solid var(--color-border); border-radius: 8px; font-size: 18px; font-weight: 700; color: var(--color-primary); text-align: center;" id="totalSessionsCounter">0</div>
+                        <div style="padding: 12px; background: var(--color-input); border: 2px solid var(--color-border); border-radius: 8px; font-size: 18px; font-weight: 700; color: var(--color-primary); text-align: center; min-height: 48px; display: flex; align-items: center; justify-content: center;" id="totalSessionsCounter">0</div>
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;" id="monthlyStatsContainer"></div>
