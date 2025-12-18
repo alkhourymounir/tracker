@@ -48,7 +48,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        /* Icon styling */
         .barbell-icon {
             display: inline-block;
             width: 80px;
@@ -454,100 +453,53 @@
                 gap: 12px;
             }
         }
-    /* Mobile layout fixes */
-@media (max-width: 480px) {
-    body {
-        font-size: 14px;
-    }
 
-    .app-container {
-        padding: 8px 10px;
-    }
+        /* Mobile layout fixes */
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
 
-    h1, h2, h3 {
-        margin-bottom: 6px;
-    }
+            .container {
+                padding: 0 8px;
+            }
 
-    /* Tabs */
-    .tabs {
-        margin-bottom: 8px;
-    }
+            h1, h2, h3 {
+                margin-bottom: 6px;
+            }
 
-    .tab {
-        padding: 6px 10px;
-        font-size: 13px;
-    }
+            .tabs {
+                margin-bottom: 8px;
+            }
 
-    /* Section title */
-    .section-title,
-    .section-header {
-        margin: 6px 0 4px;
-    }
+            .tab-btn {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
 
-    /* Budget cards wrapper */
-    .budget-summary {
-        gap: 6px;
-        margin-top: 8px;
-        margin-bottom: 10px;
-    }
+            .section-title {
+                margin: 6px 0 4px;
+            }
 
-    .budget-card {
-        padding: 8px 6px;
-        min-width: 0;
-        flex: 1 1 calc(33.33% - 4px);
-    }
+            .monthly-budget {
+                padding: 16px 12px;
+                margin-bottom: 12px;
+            }
 
-    .budget-card .value {
-        font-size: 18px;
-        margin-bottom: 2px;
-    }
+            .calendar-wrapper {
+                padding: 16px 12px;
+                margin-bottom: 12px;
+            }
 
-    .budget-card .label {
-        font-size: 10px;
-        line-height: 1.2;
-    }
+            .calendar-grid {
+                gap: 4px;
+            }
 
-    /* Monthly budget input card */
-    .budget-input-card {
-        padding: 10px 8px;
-        margin-bottom: 8px;
-    }
-
-    .budget-input-card input {
-        height: 34px;
-        font-size: 13px;
-    }
-
-    /* Calendar block */
-    .calendar-card {
-        margin-top: 8px;
-        padding: 10px 8px;
-    }
-
-    .calendar-header {
-        margin-bottom: 6px;
-    }
-
-    .calendar-header h3 {
-        font-size: 14px;
-    }
-
-    .calendar-grid {
-        gap: 4px;
-    }
-
-    .calendar-day,
-    .calendar-date {
-        width: 32px;
-        height: 32px;
-        font-size: 11px;
-    }
-
-    /* Reduce vertical whitespace overall */
-    .card {
-        margin-bottom: 10px;
-    }
-}
+            .calendar-day {
+                padding: 8px 2px;
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -556,23 +508,16 @@
             <h1>
                 <div class="barbell-icon">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Colorful Clipboard with Checkmark -->
-                        <!-- Background gradient -->
                         <defs>
                             <linearGradient id="clipboardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:#722ED1;stop-opacity:1" />
                                 <stop offset="100%" style="stop-color:#1890FF;stop-opacity:1" />
                             </linearGradient>
                         </defs>
-                        <!-- Clipboard body -->
                         <rect x="4" y="2" width="14" height="18" rx="2" fill="url(#clipboardGradient)" stroke="none"/>
-                        <!-- Clipboard clip -->
                         <rect x="9" y="0" width="4" height="3" rx="0.5" fill="#722ED1"/>
-                        <!-- White paper area -->
                         <rect x="6" y="4" width="10" height="14" rx="1" fill="white"/>
-                        <!-- Checkmark -->
                         <path d="M10 12l2 2 4-4" stroke="#52C41A" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                        <!-- Decorative lines -->
                         <line x1="8" y1="8" x2="14" y2="8" stroke="#E8E8E8" stroke-width="1"/>
                         <line x1="8" y1="11" x2="14" y2="11" stroke="#E8E8E8" stroke-width="1"/>
                     </svg>
@@ -583,19 +528,19 @@
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('dashboard')">
+            <button class="tab-btn active" onclick="switchTab('dashboard', event)">
                 <svg viewBox="0 0 24 24"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline><polyline points="12 12 20 7.5"></polyline><polyline points="12 12 12 21"></polyline><polyline points="12 12 4 7.5"></polyline></svg>
                 Dashboard
             </button>
-            <button class="tab-btn" onclick="switchTab('calendar')">
+            <button class="tab-btn" onclick="switchTab('calendar', event)">
                 <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 Calendar
             </button>
-            <button class="tab-btn" onclick="switchTab('add-session')">
+            <button class="tab-btn" onclick="switchTab('add-session', event)">
                 <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 Add Session
             </button>
-            <button class="tab-btn" onclick="switchTab('all-sessions')">
+            <button class="tab-btn" onclick="switchTab('all-sessions', event)">
                 <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
                 All Sessions
             </button>
@@ -709,17 +654,22 @@
     </div>
 
     <script>
+        // Always start with empty list and budget 0 if nothing saved
         let sessions = JSON.parse(localStorage.getItem('trainingSessions')) || [];
-        let monthlyBudget = parseInt(localStorage.getItem('monthlyBudget')) || 10;
+        let storedBudget = parseInt(localStorage.getItem('monthlyBudget'));
+        let monthlyBudget = isNaN(storedBudget) ? 0 : storedBudget;
+
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let selectedModalDate = null;
 
-        function switchTab(tabName) {
+        function switchTab(tabName, evt) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
-            event.target.closest('.tab-btn').classList.add('active');
+            if (evt && evt.target) {
+                evt.target.closest('.tab-btn').classList.add('active');
+            }
 
             if (tabName === 'dashboard') updateDashboard();
             else if (tabName === 'all-sessions') renderAllSessions();
@@ -747,6 +697,7 @@
             localStorage.setItem('trainingSessions', JSON.stringify(sessions));
             clearForm();
             updateDashboard();
+            renderCalendar();
         }
 
         function openCalendarModal(dateStr) {
@@ -865,6 +816,7 @@
                 localStorage.setItem('trainingSessions', JSON.stringify(sessions));
                 renderAllSessions();
                 updateDashboard();
+                updateMonthlyStats();
             }
         }
 
@@ -873,10 +825,12 @@
             localStorage.setItem('trainingSessions', JSON.stringify(sessions));
             renderAllSessions();
             updateDashboard();
+            renderCalendar();
         }
 
         function updateMonthlyStats() {
-            monthlyBudget = parseInt(document.getElementById('monthlyBudget').value) || 0;
+            const raw = parseInt(document.getElementById('monthlyBudget').value);
+            monthlyBudget = isNaN(raw) ? 0 : raw;
             localStorage.setItem('monthlyBudget', monthlyBudget);
 
             const currentMonthSessions = sessions.filter(s => {
@@ -888,8 +842,8 @@
             const unpaid = currentMonthSessions.filter(s => s.status === 'unpaid').length;
             const used = paid + unpaid;
             const remaining = Math.max(0, monthlyBudget - used);
-            const remainingPaid = Math.ceil(remaining * 0.6);
-            const remainingUnpaid = Math.floor(remaining * 0.4);
+            const remainingPaid = remaining === 0 ? 0 : Math.ceil(remaining * 0.6);
+            const remainingUnpaid = remaining === 0 ? 0 : Math.floor(remaining * 0.4);
 
             document.getElementById('monthlyStatsContainer').innerHTML = `
                 <div class="stat-card">
@@ -959,12 +913,11 @@
 
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('sessionDate').value = today;
-        document.getElementById('monthlyBudget').value = monthlyBudget;
+        document.getElementById('monthlyBudget').value = monthlyBudget || 0;
 
         updateDashboard();
         renderCalendar();
 
-        // Close modal when clicking outside
         document.getElementById('addSessionModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeModal();
