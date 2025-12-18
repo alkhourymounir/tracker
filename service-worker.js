@@ -1,5 +1,5 @@
-const CACHE_NAME = 'trainer-v1';
-const urlsToCache = ['/', '/index.html', '/manifest.json'];
+const CACHE_NAME = 'sessions-tracker-v1';
+const urlsToCache = ['/', '/tracker/index.html', '/tracker/manifest.json'];
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -35,7 +35,7 @@ self.addEventListener('fetch', event => {
           cache.put(event.request, responseToCache);
         });
         return response;
-      }).catch(() => caches.match('/index.html'));
+      }).catch(() => caches.match('/tracker/index.html'));
     })
   );
 });
