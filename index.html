@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sessions Tracker</title>
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#722ED1">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./service-worker.js').catch(err => console.log('SW registration failed:', err));
+        }
+    </script>
     <style>
         :root {
             --color-primary: #722ED1;
