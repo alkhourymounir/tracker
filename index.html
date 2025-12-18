@@ -654,10 +654,13 @@
     </div>
 
     <script>
-        // Always start with empty list and budget 0 if nothing saved
+        // Load sessions
         let sessions = JSON.parse(localStorage.getItem('trainingSessions')) || [];
-        let storedBudget = parseInt(localStorage.getItem('monthlyBudget'));
-        let monthlyBudget = isNaN(storedBudget) ? 0 : storedBudget;
+
+        // Monthly budget: default 0 if not set or invalid
+        let rawBudget = localStorage.getItem('monthlyBudget');
+        let monthlyBudget = rawBudget === null ? 0 : parseInt(rawBudget, 10);
+        if (isNaN(monthlyBudget)) monthlyBudget = 0;
 
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
@@ -689,7 +692,10 @@
 
             sessions.push({
                 id: Date.now(),
-                date, number: parseInt(number), status, notes,
+                date,
+                number: parseInt(number, 10),
+                status,
+                notes,
                 createdAt: new Date().toLocaleDateString()
             });
 
@@ -728,7 +734,7 @@
             sessions.push({
                 id: Date.now(),
                 date: selectedModalDate,
-                number: parseInt(number),
+                number: parseInt(number, 10),
                 status,
                 notes,
                 createdAt: new Date().toLocaleDateString()
@@ -829,7 +835,7 @@
         }
 
         function updateMonthlyStats() {
-            const raw = parseInt(document.getElementById('monthlyBudget').value);
+            const raw = parseInt(document.getElementById('monthlyBudget').value, 10);
             monthlyBudget = isNaN(raw) ? 0 : raw;
             localStorage.setItem('monthlyBudget', monthlyBudget);
 
@@ -841,13 +847,20 @@
             const paid = currentMonthSessions.filter(s => s.status === 'paid').length;
             const unpaid = currentMonthSessions.filter(s => s.status === 'unpaid').length;
             const used = paid + unpaid;
-            const remaining = Math.max(0, monthlyBudget - used);
-            const remainingPaid = remaining === 0 ? 0 : Math.ceil(remaining * 0.6);
-            const remainingUnpaid = remaining === 0 ? 0 : Math.floor(remaining * 0.4);
+
+            let remaining = 0;
+            let remainingPaid = 0;
+            let remainingUnpaid = 0;
+
+            if (monthlyBudget > 0) {
+                remaining = Math.max(0, monthlyBudget - used);
+                remainingPaid = remaining === 0 ? 0 : Math.ceil(remaining * 0.6);
+                remainingUnpaid = remaining === 0 ? 0 : Math.floor(remaining * 0.4);
+            }
 
             document.getElementById('monthlyStatsContainer').innerHTML = `
                 <div class="stat-card">
-                    <div class="stat-number">${used}/${monthlyBudget}</div>
+                    <div class="stat-number">${monthlyBudget === 0 ? 0 : used}/${monthlyBudget}</div>
                     <div class="stat-label">Used This Month</div>
                 </div>
                 <div class="stat-card">
@@ -913,7 +926,7 @@
 
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('sessionDate').value = today;
-        document.getElementById('monthlyBudget').value = monthlyBudget || 0;
+        document.getElementById('monthlyBudget').value = monthlyBudget === 0 ? 0 : monthlyBudget;
 
         updateDashboard();
         renderCalendar();
